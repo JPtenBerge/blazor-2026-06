@@ -1,9 +1,13 @@
 ﻿using DemoProject.Entities;
+using Microsoft.AspNetCore.Components;
 
 namespace DemoProject.Components.Pages;
 
-public partial class Home
+public partial class Home : ComponentBase
 {
+    [SupplyParameterFromForm(FormName = "AddPersonForm")] // ge-POSTe wordt hierin gebind
+    public Person NewPerson { get; set; } = new();
+
     public List<Person>? People { get; set; } = new()
     {
         new()
@@ -32,4 +36,14 @@ public partial class Home
     {
         return $"Hallo, {Name}!";
     }
+
+    void AddPerson()
+    {
+        Console.WriteLine("hier kom ik");
+        if (NewPerson is not null)
+        {
+            Console.WriteLine("hey nieuw persoon aanmaken: " + NewPerson.Name);
+        }
+    }
+
 }

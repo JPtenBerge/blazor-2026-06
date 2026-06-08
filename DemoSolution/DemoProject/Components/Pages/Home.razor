@@ -4,11 +4,33 @@
 
 <h1>Hello, world!</h1>
 
-Welkommmmmmmmm 4.
+<EditForm FormName="AddPersonForm" Model="NewPerson" OnValidSubmit="AddPerson">
+    <Blazilla.FluentValidator />
 
-Naam: @Name.ToUpper()
+    <ValidationSummary />
 
-@DoeIets()
+    <ol>
+        <li>
+            <label for="input-name">Naam:</label>
+            <InputText @bind-Value="NewPerson.Name" />
+            <ValidationMessage For="@(() => NewPerson.Name)" />
+        </li>
+        <li>
+            <label for="input-age">Leeftijd:</label>
+            <InputNumber @bind-Value="NewPerson.Age" />
+            <ValidationMessage For="@(() => NewPerson.Age)" />
+        </li>
+        <li>
+            <label for="input-photo-url">Foto URL:</label>
+            <InputText @bind-Value="NewPerson.PhotoUrl" />
+            <ValidationMessage For="@(() => NewPerson.PhotoUrl)" />
+        </li>
+        <li>
+            <button>Voeg toe</button>
+        </li>
+    </ol>
+</EditForm>
+
 
 @if (People is null)
 {
@@ -27,5 +49,10 @@ else
 <style>
     .oud {
         background: lightgoldenrodyellow;
+    }
+
+    form ol {
+        list-style: none;
+        padding: 0;
     }
 </style>

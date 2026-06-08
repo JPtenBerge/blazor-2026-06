@@ -1,9 +1,14 @@
 using DemoProject.Components;
+using DemoProject.Entities;
+using DemoProject.Validators;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents();
+
+builder.Services.AddTransient<IValidator<Person>, PersonValidator>();
 
 var app = builder.Build();
 
