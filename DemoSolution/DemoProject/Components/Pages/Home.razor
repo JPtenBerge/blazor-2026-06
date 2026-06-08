@@ -1,0 +1,31 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welkommmmmmmmm 4.
+
+Naam: @Name.ToUpper()
+
+@DoeIets()
+
+@if (People is null)
+{
+    <p>Geen personen.</p>
+}
+else
+{
+    <ul>
+        @foreach (var person in People)
+        {
+            <li class="@(person.Age > 60 ? "oud" : "")">@person.Name is @person.Age jaar jong</li>
+        }
+    </ul>
+}
+
+<style>
+    .oud {
+        background: lightgoldenrodyellow;
+    }
+</style>
