@@ -1,0 +1,44 @@
+﻿@page "/interactive-server"
+@using DemoProject.Entities
+@using DemoProject.Repositories
+
+
+Tellertje: @Tellertje
+
+<MudButton OnClick="Increment">Increment</MudButton>
+
+<MudSpacer />
+
+@if (People is not null)
+{
+    <Autocompleter T=Person Data="People" OnSelect="HandleSelect" @rendermode="InteractiveServer" />
+    
+}
+
+@code {
+    [Inject] public IPersonRepository PersonRepository { get; set; } = null!;
+    public List<Person>? People { get; set; }
+
+
+    public int Tellertje { get; set; }
+
+    void Increment() => Tellertje++;
+
+    void HandleSelect(Person item)
+    {
+        Console.WriteLine($"Hey er is iets geselecteerd: {item.Name}");
+    }
+
+
+
+    protected override async Task OnInitializedAsync() => await RefreshPeople();
+
+    private async Task RefreshPeople()
+    {
+        Console.WriteLine("waiting!");
+        await Task.Delay(2000);
+        Console.WriteLine("people halen");
+        People = [.. await PersonRepository.GetAllAsync()];
+
+    }
+}
