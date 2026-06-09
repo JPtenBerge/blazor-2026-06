@@ -202,3 +202,4 @@ Daarna is het integreren meestal ongeveer deze stappen:
 - [Benchmark frontend frameworks](https://github.com/krausest/js-framework-benchmark)
   - focust vooral op DOM-aanpassingen, vandaar dat WASM doorgaans niet super uit de bus komt
 - [Dapper, alternatief voor EF Core](https://github.com/DapperLib/Dapper)
+- [Turkey test](https://www.moserware.com/2008/02/does-your-code-pass-turkey-test.html), over het hoofdletterongevoelig vergelijken van strings
