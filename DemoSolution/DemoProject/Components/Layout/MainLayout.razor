@@ -5,10 +5,12 @@
 <MudDialogProvider />
 <MudSnackbarProvider /> *@
 
-<MudNavMenu>
-    <MudNavLink Href="/" Match="NavLinkMatch.All">Home</MudNavLink>
-    <MudNavLink Href="/weather">Weather</MudNavLink>
-    <MudNavLink Href="/interactive-server">Interactive server</MudNavLink>
-</MudNavMenu>
+<div style="display: flex; gap: 1rem;">
+    <MudNavMenu>
+        <MudNavLink Href="/" Match="NavLinkMatch.All">Home</MudNavLink>
+        <MudNavLink Href="/weather">Weather</MudNavLink>
+        <MudNavLink Href="/interactive-server">Interactive server</MudNavLink>
+    </MudNavMenu>
 
-@Body
+    <main>@Body</main>
+</div>
