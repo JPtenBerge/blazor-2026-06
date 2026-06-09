@@ -25,8 +25,7 @@
   - libs/frameworks: mkdocs Docusaurus 11ty HUGO Next.js @angular/ssr Nuxt.js
 - Single Page Application (SPA)
   - 1 pagina, een stukje wordt ververst
-    - Asynchronous JavaScript And XML (2005)
-                                  JSON
+    - Asynchronous JavaScript And XML (2005) (overal wordt allang JSON gebruikt, maar AJAJ klinkt minder tof)
   - zo min mogelijk full page refreshes
   - libs/frameworks: Angular React Vue Svelte Blazor Solid Inferno Qwik
   - wanneer: responsiveness gebruiksvriendelijkheid   hoog niveau aan interactie
@@ -41,6 +40,7 @@
 - grote namen:
   - Steve Sanderson
     - ooit bekend van knockout.js
+  - Daniel Roth - productmanager
 - programmeren in C#
   - dit is de hoofdreden waarom teams/organisaties voor Blazor kiezen.
 - content projection doet het heel mooi
@@ -111,13 +111,6 @@
 - ASP.NET MVC
   - 2008
 
-## Coole links
-
-- [Vite die uitlegt waarom HMR zo fijn is](https://vite.dev/guide/why)
-- [Benchmark frontend frameworks](https://github.com/krausest/js-framework-benchmark)
-  - focust vooral op DOM-aanpassingen, vandaar dat WASM doorgaans niet super uit de bus komt
-
-
 ## Formvalidatie
 
 - Blazor ondersteunt natuurlijk .NET's ingebouwde data annotations: `[Required]` `[RegularExpression("...")]`
@@ -140,3 +133,72 @@
 - POST
   - /Pagina
   - BODY  name=JP&age=39&...
+
+## Dependency injection
+
+- ergens injecten op plekken waar je 'm nodig hebt
+- memory management
+- worden automatisch geinjecteerd
+- handig bij unittesten - mocking!
+
+>high cohesion, low coupling
+
+```cs
+ILogger logger;
+public void ComplexAlgorithm()
+{
+  logger.Log("Calculating tail..."); // het maakt dit algoritme niet uit waar er naar toe wordt gelogd - console, file, db
+}
+```
+
+Blazor Static SSR lifetimes:
+- addtransient
+  - altijd een nieuwe
+- addscoped
+  - HTTP/WebSocket/...-request
+- addsingleton
+  - altijd - tot applicatie sluit/crasht
+
+Blazor WebAssembly lifetimes:
+- addtransient
+  - altijd een nieuwe
+- addscoped
+  - [Client-side doesn't currently have a concept of DI scopes. Scoped-registered services behave like Singleton services.](https://learn.microsoft.com/en-us/aspnet/core/blazor/fundamentals/dependency-injection?view=aspnetcore-10.0#service-lifetime)
+- addsingleton
+  - altijd - tot applicatie sluit/crasht
+
+
+Styling
+
+- Bootstrap
+  - Grid system  col-lg-4    grid flex
+- Material Design
+  - MatBlazor
+  - MudBlazor
+- Overig
+  - AntDesign
+  - MIcrosoft Fluent UI - "het ziet er wel erg Outlook-erig uit"
+
+## UI library integreren
+
+Kijk eerst of de UI library waar je interesse in hebt, ondersteund wordt voor jouw Blazoruitvoering. Traditioneel is Blazor interactief met Server/WebAssembly, Static SSR wordt nog niet door alles ondersteund. Zie [Awesome Blazor](https://github.com/AdrienTorris/awesome-blazor?tab=readme-ov-file#libraries--extensions) voor lijst van UI libraries.
+
+Daarna is het integreren meestal ongeveer deze stappen:
+
+- NuGet package toevoegen
+- Program dependency injection regelen
+- `App.razor`/`Host.razor` toevoegen van `<script>` `<link>`
+- `MainLayout.razor` globale UI componenten opnemen, `<Theme />`, `<Snackbar />`
+- globale `@using` zodat je de componenten kunt aanspreken zonder prefix:
+  ```razor
+	<MudBlazor.Component.MudButton />
+	<MudButton />  
+  ```
+- klaar voor gebruik!
+
+## Coole links
+
+- [Vite die uitlegt waarom HMR zo fijn is](https://vite.dev/guide/why)
+- [Benchmark frontend frameworks](https://github.com/krausest/js-framework-benchmark)
+  - focust vooral op DOM-aanpassingen, vandaar dat WASM doorgaans niet super uit de bus komt
+- [Dapper, alternatief voor EF Core](https://github.com/DapperLib/Dapper)
