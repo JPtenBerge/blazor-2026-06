@@ -3,6 +3,7 @@ using DemoProject.Entities;
 using DemoProject.Repositories;
 using DemoProject.Validators;
 using FluentValidation;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddRazorComponents();
 builder.Services.AddTransient<IValidator<Person>, PersonValidator>();
 
 builder.Services.AddSingleton<IPersonRepository, PersonRepository>();
+builder.Services.AddMudServices();
 
 var app = builder.Build();
 

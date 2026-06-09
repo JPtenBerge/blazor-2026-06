@@ -1,4 +1,7 @@
 ﻿@page "/"
+@* @{
+    Layout = "LoginLayout";
+} *@
 
 <PageTitle>Home</PageTitle>
 
@@ -12,6 +15,9 @@
     <ol>
         <li>
             <label for="input-name">Naam:</label>
+
+               @* <MudInput /> *@
+
             <InputText @bind-Value="NewPerson.Name" />
             <ValidationMessage For="@(() => NewPerson.Name)" />
         </li>

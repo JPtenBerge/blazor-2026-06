@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="Blazilla" Version="2.4.0" />
+    <PackageReference Include="Extensions.MudBlazor.StaticInput" Version="4.1.0" />
+    <PackageReference Include="MudBlazor" Version="9.5.0" />
   </ItemGroup>
 
 </Project>
