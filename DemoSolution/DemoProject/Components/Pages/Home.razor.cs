@@ -11,6 +11,9 @@ public partial class Home : ComponentBase
     [SupplyParameterFromForm(FormName = "AddPersonForm")] // ge-POSTe wordt hierin gebind
     public Person NewPerson { get; set; } = new();
 
+    [SupplyParameterFromForm(FormName = "AddPersonForm")]
+    public IFormFile CV { get; set; }
+
     public List<Person>? People { get; set; }
 
     public string Name { get; set; } = "Luuk";
@@ -28,6 +31,15 @@ public partial class Home : ComponentBase
             Console.WriteLine("hey nieuw persoon aanmaken: " + NewPerson.Name);
             await PersonRepository.AddAsync(NewPerson);
             await RefreshPeople();
+        }
+
+
+        if (CV is not null)
+        {
+            var stream = CV.OpenReadStream();
+            using var reader = new StreamReader(stream);
+            var content = await reader.ReadToEndAsync(); // 4GB?
+            Console.WriteLine($"Geuploade content: {content}");
         }
     }
 

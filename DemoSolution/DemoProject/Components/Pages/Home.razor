@@ -4,7 +4,7 @@
 
 <h1>Hello, world!</h1>
 
-<EditForm FormName="AddPersonForm" Model="NewPerson" OnValidSubmit="AddPerson">
+<EditForm FormName="AddPersonForm" Model="NewPerson" OnValidSubmit="AddPerson" enctype="multipart/form-data">
     <Blazilla.FluentValidator />
 
     <ValidationSummary />
@@ -24,6 +24,10 @@
             <label for="input-photo-url">Foto URL:</label>
             <InputText @bind-Value="NewPerson.PhotoUrl" />
             <ValidationMessage For="@(() => NewPerson.PhotoUrl)" />
+        </li>
+        <li>
+            <label for="input-photo-url">CV:</label>
+            <input type="file" name="cv" />
         </li>
         <li>
             <button>Voeg toe</button>
