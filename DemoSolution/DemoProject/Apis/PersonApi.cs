@@ -5,16 +5,30 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace DemoProject.Apis;
 
+
+
+
 public static class PersonApi
 {
-    public static void MapPersonEndpoints(this IEndpointRouteBuilder endpoints)
+    extension(IEndpointRouteBuilder endpoints)
     {
-        var group = endpoints.MapGroup("api/persons");
-        group.MapGet("/", GetAll);
-        group.MapGet("/{id:int}", Get);
-        group.MapPost("/", Post);
-        //group.MapDelete("/{id:int}", GetAll);
+        public void MapPersonEndpoints()
+        {
+            var group = endpoints.MapGroup("api/persons");
+            group.MapGet("/", GetAll);
+            group.MapGet("/{id:int}", Get);
+            group.MapPost("/", Post);
+        }
     }
+
+    //public static void MapPersonEndpoints(this IEndpointRouteBuilder endpoints)
+    //{
+    //    var group = endpoints.MapGroup("api/persons");
+    //    group.MapGet("/", GetAll);
+    //    group.MapGet("/{id:int}", Get);
+    //    group.MapPost("/", Post);
+    //    //group.MapDelete("/{id:int}", GetAll);
+    //}
 
     public static async Task<IEnumerable<Person>> GetAll(IPersonRepository repo)
     {
