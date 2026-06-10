@@ -14,10 +14,10 @@ builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 builder.Services.AddTransient<IValidator<Person>, PersonValidator>();
 builder.Services.AddTransient<IPersonRepository, PersonDbRepository>();
 builder.Services.AddMudServices();
-builder.Services.AddDbContext<DemoContext>(options =>
+builder.Services.AddDbContextFactory<DemoContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DemoContext"));
-});
+}, ServiceLifetime.Transient);
 
 var app = builder.Build();
 

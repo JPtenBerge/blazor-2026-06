@@ -1,0 +1,59 @@
+﻿@using DemoProject.DataAccess
+@using DemoProject.Entities
+@using Microsoft.EntityFrameworkCore
+@page "/circuitprobleem"
+@* @inject DemoContext Context *@
+@inject IDbContextFactory<DemoContext> ContextFactory
+@rendermode InteractiveServer
+
+<h3>CircuitProbleem</h3>
+
+<MudButton OnClick="GetAll">Get all people</MudButton>
+<MudButton OnClick="Add">Add people</MudButton>
+<MudButton OnClick="Edit">Edit people</MudButton>
+
+De ID:
+<MudNumericField @bind-Value="PersonToEdit.Id" />
+
+@if (People is not null)
+{
+    <ul>
+        @foreach (var person in People)
+        {
+            <li>@person.Name heeft als ID @person.Id</li>
+        }
+    </ul>
+}
+
+@code {
+    public List<Person>? People { get; set; }
+    public Person PersonToAdd { get; set; } = new() { Name = "Henri", Age = 49, PhotoUrl = "henri.png" };
+    public Person PersonToEdit { get; set; } = new() { Id = 43434, Name = "Henri2", Age = 51, PhotoUrl = "henri.png" };
+
+    // change tracker
+
+    async Task GetAll()
+    {
+        using var context = await ContextFactory.CreateDbContextAsync();
+        People = await context.Persons.ToListAsync();
+    }
+    async Task Add()
+    {
+        using var context = await ContextFactory.CreateDbContextAsync();
+        context.Persons.Add(PersonToAdd);
+        await context.SaveChangesAsync(); // nieuwe Id
+    }
+    async Task Edit()
+    {
+        // zelfde context?!
+
+        // var personUitDb = Context.Persons.Single(x => x.Id == PersonToEdit.Id);
+        // personUitDb.Name = PersonToEdit.Name;
+        // personUitDb.Age= PersonToEdit.Age;
+
+        using var context = await ContextFactory.CreateDbContextAsync();
+        context.Persons.Update(PersonToEdit);
+        await context.SaveChangesAsync();
+    }
+}
+
