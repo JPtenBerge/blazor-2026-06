@@ -1,15 +1,18 @@
 using DemoProject.Components;
 using DemoProject.DataAccess;
-using DemoProject.Entities;
+using DemoProject.Shared.Entities;
 using DemoProject.Repositories;
-using DemoProject.Validators;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
+using DemoProject.Shared.Repositories;
+using DemoProject.Shared.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents()
+    .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddTransient<IValidator<Person>, PersonValidator>();
 builder.Services.AddTransient<IPersonRepository, PersonDbRepository>();
@@ -32,6 +35,9 @@ app.UseHttpsRedirection();
 app.UseAntiforgery();
 
 app.MapStaticAssets();
-app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode()
+    .AddInteractiveWebAssemblyRenderMode()
+    .AddAdditionalAssemblies(typeof (BlazorApp1.Client._Imports).Assembly);
 
 app.Run();

@@ -1,7 +1,7 @@
-﻿using DemoProject.Entities;
+﻿using DemoProject.Shared.Entities;
 using FluentValidation;
 
-namespace DemoProject.Validators;
+namespace DemoProject.Shared.Validators;
 
 public class PersonValidator : AbstractValidator<Person>
 {

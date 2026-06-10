@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DemoProject.Entities;
+namespace DemoProject.Shared.Entities;
 
 public class Person
 {

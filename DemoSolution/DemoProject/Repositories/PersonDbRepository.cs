@@ -1,5 +1,6 @@
 ﻿using DemoProject.DataAccess;
-using DemoProject.Entities;
+using DemoProject.Shared.Entities;
+using DemoProject.Shared.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.Repositories;

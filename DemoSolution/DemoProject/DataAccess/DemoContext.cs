@@ -1,4 +1,4 @@
-﻿using DemoProject.Entities;
+﻿using DemoProject.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.DataAccess;

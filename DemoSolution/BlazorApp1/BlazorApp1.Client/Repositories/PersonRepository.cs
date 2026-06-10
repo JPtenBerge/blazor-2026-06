@@ -1,7 +1,7 @@
 ﻿using DemoProject.Shared.Entities;
 using DemoProject.Shared.Repositories;
 
-namespace DemoProject.Repositories;
+namespace BlazorApp1.Client.Repositories;
 
 public class PersonRepository : IPersonRepository
 {
@@ -10,19 +10,19 @@ public class PersonRepository : IPersonRepository
         new()
         {
             Age = 63,
-            Name = "Bob",
+            Name = "Client-side Bob",
             PhotoUrl = "https://example.com/photos/bob.jpg"
         },
         new()
         {
             Age = 30,
-            Name = "Alice",
+            Name = "Client-side Alice",
             PhotoUrl = "https://example.com/photos/alice.jpg"
         },
         new()
         {
             Age = 23,
-            Name = "Eve",
+            Name = "Client-side Eve",
             PhotoUrl = "https://example.com/photos/eve.jpg"
         }
     };

@@ -1,6 +1,6 @@
-﻿using DemoProject.Entities;
+﻿using DemoProject.Shared.Entities;
 
-namespace DemoProject.Repositories;
+namespace DemoProject.Shared.Repositories;
 
 public interface IPersonRepository
 {

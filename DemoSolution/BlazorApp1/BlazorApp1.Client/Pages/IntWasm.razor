@@ -1,0 +1,59 @@
+﻿@page "/interactive-wasm"
+@using BlazorApp1.Client.Components
+@using DemoProject.Shared.Entities
+@using DemoProject.Shared.Repositories
+@using MudBlazor.Charts
+@rendermode InteractiveWebAssembly
+@* @rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false)) *@
+@inject IPersonRepository PersonRepository
+
+<h3>IntWasm echt in client project</h3>
+
+Tellertje: @Tellertje
+
+<p>
+    Renderer: @RendererInfo.Name
+    <br />
+    Is interactive: @RendererInfo.IsInteractive
+</p>
+
+<MudButton OnClick="Increment">Increment</MudButton>
+
+@if (People is not null)
+{
+    <ul>
+        @foreach (var person in People)
+        {
+            <li>@person.Name is @person.Age jaar jong</li>
+        }
+    </ul>
+}
+
+<MudSpacer />
+
+@if (People is not null)
+{
+    <Autocompleter T=Person Data="People" OnSelect="HandleSelect" />
+    
+}
+
+
+@code {
+    [PersistentState] public List<Person>? People { get; set; }
+    public int Tellertje { get; set; }
+
+    void Increment() => Tellertje++;
+
+    protected override async Task OnInitializedAsync() => await RefreshPeople();
+
+    private async Task RefreshPeople()
+    {
+        Console.WriteLine("Hallo vanaf RefreshPeople!");
+        People ??= [.. await PersonRepository.GetAllAsync()];
+    }
+
+    void HandleSelect(Person item)
+    {
+        Console.WriteLine($"Hey er is iets client-side geselecteerd: {item.Name}");
+    }
+}

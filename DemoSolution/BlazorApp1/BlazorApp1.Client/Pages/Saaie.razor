@@ -1,0 +1,30 @@
+﻿@page "/saai"
+@* @rendermode new InteractiveWebAssemblyRenderMode(prerendering: false) *@
+@rendermode InteractiveWebAssembly
+@inject NavigationManager NavigationManager
+
+<h3>Saaie</h3>
+
+<p>
+    Renderer: @RendererInfo.Name
+    <br />
+    Is interactive: @RendererInfo.IsInteractive
+</p>
+
+Tellertje: @Tellertje
+
+<MudButton OnClick="Increment">Increment</MudButton>
+<MudButton OnClick="Nav">Navigeer naar die andere wasm pagina</MudButton>
+
+
+
+@code {
+    public int Tellertje { get; set; }
+
+    void Increment() => Tellertje++;
+
+    void Nav()
+    {
+        NavigationManager.NavigateTo("/interactive-wasm");
+    }
+}
