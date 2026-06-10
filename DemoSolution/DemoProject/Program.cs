@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 using DemoProject.Shared.Repositories;
 using DemoProject.Shared.Validators;
+using DemoProject.Apis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,5 +40,7 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof (BlazorApp1.Client._Imports).Assembly);
+
+app.MapPersonEndpoints();
 
 app.Run();
