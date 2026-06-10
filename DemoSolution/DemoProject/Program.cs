@@ -8,6 +8,7 @@ using MudBlazor.Services;
 using DemoProject.Shared.Repositories;
 using DemoProject.Shared.Validators;
 using DemoProject.Apis;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddOpenApi();
 builder.Services.AddTransient<IValidator<Person>, PersonValidator>();
 builder.Services.AddTransient<IPersonRepository, PersonDbRepository>();
 builder.Services.AddMudServices();
@@ -24,6 +26,17 @@ builder.Services.AddDbContextFactory<DemoContext>(options =>
 }, ServiceLifetime.Transient);
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+    app.MapScalarApiReference(opts => {
+        opts.WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+        opts.DisableMcp();
+        opts.DisableAgent();
+    });
+}
+
 
 if (!app.Environment.IsDevelopment())
 {

@@ -9,8 +9,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.8" />
-		
 		<PackageReference Include="Extensions.MudBlazor.StaticInput" Version="4.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.8" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.8" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.8">
 			<PrivateAssets>all</PrivateAssets>
@@ -22,6 +22,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="MudBlazor" Version="9.5.0" />
+		<PackageReference Include="Scalar.AspNetCore" Version="2.16.2" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -29,8 +30,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\BlazorApp1\BlazorApp1.Client\BlazorApp1.Client.csproj" />
-	  <ProjectReference Include="..\DemoProject.Shared\DemoProject.Shared.csproj" />
+		<ProjectReference Include="..\BlazorApp1\BlazorApp1.Client\BlazorApp1.Client.csproj" />
+		<ProjectReference Include="..\DemoProject.Shared\DemoProject.Shared.csproj" />
 	</ItemGroup>
 
 </Project>
