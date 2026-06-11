@@ -167,6 +167,14 @@ Blazor WebAssembly lifetimes:
 - addsingleton
   - altijd - tot applicatie sluit/crasht
 
+Blazor Server lifetimes:
+- addtransient
+  - altijd een nieuwe
+- addscoped
+  - per SignalR-verbinding / WebSocket "circuit"
+- addsingleton
+  - altijd - tot applicatie sluit/crasht
+
 
 Styling
 
@@ -196,6 +204,150 @@ Daarna is het integreren meestal ongeveer deze stappen:
   ```
 - klaar voor gebruik!
 
+## Server, WebAssembly of WebAssembly met prerendering?
+
+- SSR (prerendering) enkel als je 't nodig hebt. De toegevoegde complexiteit is het meestal niet waard
+  - Zelfs als SEO/LLMO zo belangrijk is, wellicht dat een andere techstack dan een betere keuze is. Svelte is standaard ~35kb zonder SSR
+- WebAssembly heeft het nadeel dat je altijd je data van de backend moet ophalen. Het optuigen van bijv. REST APIs met DTOs kost ook tijd en moeite.
+  - Als je organisatie ook nog een Android-/iOS-app heeft/maakt die die REST APIs gebruikt, dat kan dit echter wel weer de moeite waard zijn.
+- [Server staat bekend om schaalbaarheids-issues met 5000+ gebruikers](https://codingwithdavid.blogspot.com/2024/10/debunking-blazor-server-scaling-myths.html) en de kosten die daarbij komen kijken.
+  - Maar geen aparte REST APIs/DTOs hoeven onderhouden scheelt een hoop gedoe.
+
+
+## REST
+
+REpresentational State Transfer API
+
+- application/json
+- application/xml
+- jouworg/gviv
+
+Relevante headers:
+
+- Accept: application/json   (retour)
+- Content-Type  (stuurt)
+
+
+### Verbs/methods
+
+HTTP verbs/methods
+
+- GET	  ophalen
+- POST	  maken/wijzigen
+- PUT	  vervangen/maken
+- DELETE  verwijderen
+- PATCH	  deel wijzigen
+
+Meestal is POST aanmaken en PUT vervangen. PUT wordt ook best vaak gebruikt voor een partial update.
+
+```text
+POST  api/car  { make: '...', model: '...' }
+POST  api/car  { make: '...', model: '...' }
+POST  api/car  { make: '...', model: '...' }
+```
+```text
+PUT  api/car/3643  { make: '...', model: '...' }
+PUT  api/car/3643  { make: '...', model: '...' }
+PUT  api/car/3643  { make: '...', model: '...' }
+```
+
+Request meerdere malen uitvoeren met hetzelfde resultaat = idempotent
+
+### HTTP-statuscodes
+
+- 2xx  SUCCESS
+  - 200 OK
+  - 201 Created
+  - 204 No Content  <== return DELETE
+- 3xx  REDIRECT
+  - 301/302  Temporary/permanent
+- 4xx  CLIENT ERROR
+  - 400 Bad Request  syntax validatie
+  - 401 Unauthorized  <== geen auth token mee
+  - 403 Forbidden   <== jij hebt er geen toegang toe
+  - 404 Not Found
+  - 405 Method Not Allowed   POST ==> die geen POST ondersteunt
+  - 415 MediaType Not Supported    XML ==> die geen XML kan parsen
+  - 418 I'm a teapot
+  - 422 Unprocessable Entity
+- 5xx  SERVER ERROR
+  - 500 Internal Server Error (exceptions)
+  - 502 Bad Gateway
+
+### In ASP.NET Core
+
+Twee aanpakken:
+
+- controllers
+  - sinds het begin zitten ze erin
+  - `[ApiController]` `[HttpGet]` `[HttpPost]`
+  - OpenAPI   `[Consumes()]` `[Produces()]`
+  - action filters
+  - controllerfactory
+  - dependency injection in de constructor
+- minimal APIs
+  - OpenAPI consumes/produces veel directer gekoppeld
+  - er zit minder features in.
+  - ~~geen~~ opt-in validatie
+  - performance
+  - dependency in de methode
+  - je kan zelf je structuur bedenken
+
+### API testing tools
+
+- .http/.rest
+- VS Code-extensies: REST client, Thunder Client
+- Bruno (krachtig!)
+- Hoppscotch
+- Postman (paywall, dark mode, UI druk)
+- Insomnia (kleine paywall)
+- Yaak ($$)
+- Scalar
+- Swagger UI ❌
+
+## Kleine geschiedenis van ASP.NET
+
+ASP.NET (.NET Framework) bestond uit:
+
+- WebForms (2001)
+  - ooit gemaakt met de mindset om VB6 developers nu ook webapplicaties te kunnen laten maken zonder het hele web te hoeven leren
+  - stateful webapp
+  - HTML/CSS/JS wegabstraheren
+  - stond bekend om z'n notoire ViewState
+  - Je hele pagina zat in een form:
+    ```html
+    <body>
+      <form>
+        ...de hele pagina
+        <input type="hidden" name="__VIEWSTATE" value="...">
+      </form>
+    </body>
+    ```
+  - SharePoint is erin gemaakt
+- MVC (2008)
+
+Daarna kwam .NET Core met ASP.NET Core. WebForms met de viewstate is daarin komen te vervallen.
+
+## Testen
+
+Testframeworks:
+
+- NUnit
+- xUnit
+- MSTest
+
+Welke je kiest maakt tegenwoordig erg weinig uit, ze zijn behoorlijk naar elkaar toegegroeid in features/syntax. Het maakt nog minder uit als je een assertion library betrekt bij het testen.
+
+Assertion libraries:
+
+- ~~FluentAssertions~~ $$$
+- AwesomeAssertions  <== fork van FluentAssertions 7
+- Shouldly
+  - prima lib, heeft echter nog niet dit soort fancy features:
+    ```cs
+    actualObj.Should().BeEquivalent(expectedObj, options => options.Exclude(x => x.DezeProp));
+    ```
+
 ## Coole links
 
 - [Vite die uitlegt waarom HMR zo fijn is](https://vite.dev/guide/why)
@@ -203,3 +355,7 @@ Daarna is het integreren meestal ongeveer deze stappen:
   - focust vooral op DOM-aanpassingen, vandaar dat WASM doorgaans niet super uit de bus komt
 - [Dapper, alternatief voor EF Core](https://github.com/DapperLib/Dapper)
 - [Turkey test](https://www.moserware.com/2008/02/does-your-code-pass-turkey-test.html), over het hoofdletterongevoelig vergelijken van strings
+
+
+
+
