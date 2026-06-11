@@ -23,6 +23,9 @@
 		</PackageReference>
 		<PackageReference Include="MudBlazor" Version="9.5.0" />
 		<PackageReference Include="Scalar.AspNetCore" Version="2.16.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="10.0.8" />
+		<PackageReference Include="Duende.BFF" Version="4.2.0" />
+		<PackageReference Include="Duende.BFF.Blazor" Version="4.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using BlazorApp1.Client.Components
+@inherits LayoutComponentBase
 
 <MudThemeProvider />
 @*<MudPopoverProvider />
@@ -13,6 +14,8 @@
         <MudNavLink Href="/interactive-wasm">Interactive WebAssembly</MudNavLink>
         <MudNavLink Href="/saai">Saaie</MudNavLink>
         <MudNavLink Href="/circuitprobleem">Circuitprobleem</MudNavLink>
+
+        <LoginDisplay />
     </MudNavMenu>
 
     <main>@Body</main>
