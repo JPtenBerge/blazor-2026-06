@@ -7,11 +7,12 @@ public partial class Autocompleter<T>
 {
     [Parameter] public List<T> Data { get; set; }
     [Parameter] public EventCallback<T> OnSelect { get; set; }
+    [Parameter] public RenderFragment<T> ItemTemplate { get; set; }
     public string Query { get; set; }
     public List<T>? Suggestions { get; set; }
     public int? ActiveSuggestionIndex { get; set; }
 
-    void Autocomplete()
+    public void Autocomplete()
     {
         Console.WriteLine($"autocmopleting! {Query}");
 
@@ -40,7 +41,7 @@ public partial class Autocompleter<T>
         }
     }
 
-    async Task HandleKeydown(KeyboardEventArgs args)
+    public async Task HandleKeydown(KeyboardEventArgs args)
     {
         if (args.Key == "ArrowDown")
         {
@@ -56,7 +57,7 @@ public partial class Autocompleter<T>
         }
     }
 
-    void Next()
+    public void Next()
     {
         if (Suggestions is null) return;
 
@@ -68,7 +69,7 @@ public partial class Autocompleter<T>
         ActiveSuggestionIndex = (ActiveSuggestionIndex + 1) % Suggestions.Count;
     }
 
-    async Task Select()
+    public async Task Select()
     {
         if (Suggestions is null || !ActiveSuggestionIndex.HasValue) return;
         await OnSelect.InvokeAsync(Suggestions[ActiveSuggestionIndex.Value]);

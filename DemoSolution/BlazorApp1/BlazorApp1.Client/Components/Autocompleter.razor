@@ -14,7 +14,14 @@
             var suggestion = Suggestions[i];
 
             <li class="@(i == ActiveSuggestionIndex ? "active" : "")">
-                @JsonSerializer.Serialize(suggestion)
+                @if (ItemTemplate is not null)
+                {
+                    @ItemTemplate(suggestion)
+                }
+                else
+                {
+                    @JsonSerializer.Serialize(suggestion)
+                }
             </li>
         }
     </ul>

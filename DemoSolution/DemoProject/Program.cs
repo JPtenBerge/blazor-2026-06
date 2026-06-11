@@ -25,12 +25,22 @@ builder.Services.AddDbContextFactory<DemoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DemoContext"));
 }, ServiceLifetime.Transient);
 
+// CORS is nu nog niet nodig, maar mocht je je WASM standalone hosten dan wordt dit nodig:
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("blazorfrontend", policy =>
+//    {
+//        policy.WithOrigins("https://localhost:7085").AllowAnyHeader().AllowCredentials().AllowAnyMethod();
+//    });
+//});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference(opts => {
+    app.MapScalarApiReference(opts =>
+    {
         opts.WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
         opts.DisableMcp();
         opts.DisableAgent();
@@ -48,11 +58,13 @@ app.UseHttpsRedirection();
 
 app.UseAntiforgery();
 
+//app.UseCors("blazorfrontend");
+
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof (BlazorApp1.Client._Imports).Assembly);
+    .AddAdditionalAssemblies(typeof(BlazorApp1.Client._Imports).Assembly);
 
 app.MapPersonEndpoints();
 

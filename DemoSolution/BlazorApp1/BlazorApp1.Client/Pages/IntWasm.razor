@@ -15,7 +15,7 @@ Tellertje: @Tellertje
     Renderer: @RendererInfo.Name
     <br />
     Is interactive: @RendererInfo.IsInteractive
-</p>
+</p> 
 
 <MudButton OnClick="Increment">Increment</MudButton>
 
@@ -33,7 +33,11 @@ Tellertje: @Tellertje
 
 @if (People is not null)
 {
-    <Autocompleter T=Person Data="People" OnSelect="HandleSelect" />
+    <Autocompleter T=Person Data="People" OnSelect="HandleSelect">
+        <ItemTemplate Context="person">
+            @person.Name is @person.Age jaar jong
+        </ItemTemplate>
+    </Autocompleter>
     
 }
 
