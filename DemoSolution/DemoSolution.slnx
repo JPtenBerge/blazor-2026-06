@@ -5,5 +5,6 @@
   <Project Path="DemoProject.Client.Tests/DemoProject.Client.Tests.csproj" Id="59f9679c-2031-4c08-9636-346176a7524f" />
   <Project Path="DemoProject.Shared/DemoProject.Shared.csproj" Id="d11f0b0d-41a1-46cc-b8a3-03c04914b3de" />
   <Project Path="DemoProject/DemoProject.csproj" />
+  <Project Path="IdentityProvidert/IdentityProvidert.csproj" Id="e5a049c7-09d7-46c4-a623-15d9188be2b0" />
   <Project Path="WasmStandaloneDemo/WasmStandaloneDemo.csproj" />
 </Solution>
