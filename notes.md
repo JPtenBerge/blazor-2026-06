@@ -348,6 +348,72 @@ Assertion libraries:
     actualObj.Should().BeEquivalent(expectedObj, options => options.Exclude(x => x.DezeProp));
     ```
 
+## Authenticatie
+
+- identificatie => wie je bent
+- authenticatie? => bewijs dat je dat bent
+  - username/password
+  - MFA  Multi-Factor Auth  2FA  https://   SMS
+  - biometrie
+    - vingerafdruk
+    - gezichtsherkenning
+    - irisscan
+    - bloed
+    - haar
+    - DNA
+- autorisatie? => wat je mag
+
+OAuth kwam ten tonele omdat steeds meer webapps ook third-party app-integratie wilden hebben:
+
+- Twitter
+- Flickr
+- Reddit
+- facebook
+
+### Tokens
+
+- JWT "jot"
+- SAML
+
+3 soorten JWTs:
+
+- ID token  <== wie jij bent
+- access token - iets doen. kort houdbaar: ~5 minuten
+- refresh token - nieuw access token
+  - zonder dat er een gebruiker bij komt kijken
+
+Open ID Connect kwam langs zodat gebruikersinformatie gestandaardiseerd in dat ID token werd opgeslagen.
+
+### Identity Providers
+
+- Entra ID   (Azure)
+- Google
+- Twitter
+- Facebook
+- Apple
+- GitHub
+- Microsoft
+- DigiD
+  - itsme
+- StackExchange
+- Vecozo
+- Auth0
+
+Eigen IP starten
+
+- Keycloak
+- IdentityServer
+
+
+
+
+
+
+
+
+
+
+
 ## Coole links
 
 - [Vite die uitlegt waarom HMR zo fijn is](https://vite.dev/guide/why)
