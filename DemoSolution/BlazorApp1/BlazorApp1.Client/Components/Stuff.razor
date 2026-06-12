@@ -1,0 +1,13 @@
+﻿<h3>Stuff</h3>
+
+Render: @RendererInfo.Name<br />
+Is interactive: @RendererInfo.IsInteractive
+<br />
+<br />
+Spul: @Spul
+<MudButton OnClick="Àppend">Append</MudButton>
+
+@code {
+    public string Spul { get; set; } = string.Empty;
+    void Àppend() => Spul += "o";
+}

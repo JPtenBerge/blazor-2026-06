@@ -1,0 +1,26 @@
+﻿@page "/raar"
+@rendermode InteractiveWebAssembly
+
+<h3>Raar</h3>
+
+Teller: @Tellertje
+
+<MudButton OnClick="Start">Start</MudButton>
+<MudButton OnClick="DoeNiks">Doe niks</MudButton>
+
+@code {
+
+    public int Tellertje { get; set; }
+
+    void Start()
+    {
+        // setInterval()   change detection
+        new Timer(new TimerCallback(async obj =>
+        {
+            Console.WriteLine($"Teller opgehoogd: {Tellertje}");
+            Tellertje++;
+            await InvokeAsync(() => StateHasChanged()); // WebAssembly en Server 👍
+        }), null, 1000, 1000);
+    }
+    void DoeNiks() { }
+}

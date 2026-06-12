@@ -1,0 +1,17 @@
+﻿@using BlazorApp1.Client.Components
+@page "/auto"
+
+<h3>Auto</h3>
+
+<h4>Server</h4>
+<Stuff @rendermode="InteractiveServer" />
+
+@* <h4>WebAssembly</h4>
+<Stuff @rendermode="InteractiveWebAssembly" /> *@
+
+<h4>Auto</h4>
+<Stuff @rendermode="InteractiveAuto" />
+
+@code {
+
+}
