@@ -405,6 +405,56 @@ Eigen IP starten
 - IdentityServer
 
 
+## Nadelen van token in browser binnenkrijgen
+
+waar sla je dat token op?
+
+- cookie
+  - HttpOnly
+  - XSRF
+- in een globale variabele
+  - afgeschermd van alles en iedereen middels closures, best ok!
+  - maaaar... druk op F5 en je bent uitgelogd
+- local storage
+  - XSS
+- session storage
+  - XSS
+- indexeddb
+  - XSS
+
+## Client-side storages
+
+- Local storage
+  - eeuwig
+    - tot jij .clear()
+    - tot de browsereigenaar  clear cookies/local data
+  - 10MB
+  - zelfde domein, meerdere tabbladen - shared resource
+    - race condities  bla.nl   hoi.nl:8080   sub.bla.nl (ander storage)
+- Session storage
+  - 1 sessie
+  - 10MB
+  - zolang tabblad open staat
+- IndexedDB
+  - database
+  - geen SQL
+  - document store
+  - JSON-objecten
+  - gestructureerde toegang
+  - async API
+  - 250MB
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
