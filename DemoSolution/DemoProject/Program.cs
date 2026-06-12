@@ -1,4 +1,3 @@
-using DemoProject.Apis;
 using DemoProject.Components;
 using DemoProject.DataAccess;
 using DemoProject.Repositories;
@@ -125,6 +124,5 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(BlazorApp1.Client._Imports).Assembly);
 
-app.MapPersonEndpoints();
 
 app.Run();

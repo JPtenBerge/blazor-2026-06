@@ -2,6 +2,7 @@
   <Project Path="BlazorApp1/BlazorApp1.Client/BlazorApp1.Client.csproj" Id="5512cfc5-869d-4d6e-aa32-5fdf30016120" />
   <Project Path="BlazorApp1/BlazorApp1/BlazorApp1.csproj" Id="6e51b8fd-cd1f-4834-b86d-3bec45dd942f" />
   <Project Path="BlazorServerDemo/BlazorServerDemo.csproj" />
+  <Project Path="DemoApi/DemoApi.csproj" Id="f033736d-4c19-4f07-bc21-5f34984f6538" />
   <Project Path="DemoProject.Client.Tests/DemoProject.Client.Tests.csproj" Id="59f9679c-2031-4c08-9636-346176a7524f" />
   <Project Path="DemoProject.Shared/DemoProject.Shared.csproj" Id="d11f0b0d-41a1-46cc-b8a3-03c04914b3de" />
   <Project Path="DemoProject/DemoProject.csproj" />
