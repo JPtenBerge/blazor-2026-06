@@ -17,6 +17,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddReverseProxy().LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 builder.Services.AddOpenApi();
 builder.Services.AddTransient<IValidator<Person>, PersonValidator>();
 builder.Services.AddTransient<IPersonRepository, PersonDbRepository>();
@@ -115,6 +116,7 @@ app.UseAuthorization();
 app.UseAntiforgery();
 app.MapBffManagementEndpoints();
 
+app.MapReverseProxy();
 
 //app.UseCors("blazorfrontend");
 
