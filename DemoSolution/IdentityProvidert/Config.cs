@@ -1,4 +1,6 @@
+using Duende.IdentityModel;
 using Duende.IdentityServer.Models;
+using System.Security.Claims;
 
 namespace IdentityProvidert
 {
@@ -15,7 +17,7 @@ namespace IdentityProvidert
             new ApiScope[]
             {
                 new ApiScope("scope1"),
-                new ApiScope("scope2"),
+                new ApiScope("scope2") { UserClaims = { JwtClaimTypes.Name} },
             };
 
         public static IEnumerable<Client> Clients =>

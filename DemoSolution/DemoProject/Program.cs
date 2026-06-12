@@ -6,6 +6,8 @@ using DemoProject.Shared.Repositories;
 using DemoProject.Shared.Validators;
 using Duende.Bff;
 using Duende.Bff.Blazor;
+using Duende.Bff.Yarp;
+using Duende.IdentityModel;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
@@ -17,7 +19,9 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-builder.Services.AddReverseProxy().LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+builder.Services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"))
+    .AddBffExtensions();
 builder.Services.AddOpenApi();
 builder.Services.AddTransient<IValidator<Person>, PersonValidator>();
 builder.Services.AddTransient<IPersonRepository, PersonDbRepository>();
@@ -72,11 +76,11 @@ builder.Services.AddAuthentication(options =>
         options.Scope.Clear();
         options.Scope.Add("openid");
         options.Scope.Add("profile");
-        //options.Scope.Add("api");
+        options.Scope.Add("scope2");
         options.Scope.Add("offline_access");
 
-        options.TokenValidationParameters.NameClaimType = "name";
-        options.TokenValidationParameters.RoleClaimType = "role";
+        options.TokenValidationParameters.NameClaimType = JwtClaimTypes.Name;
+        options.TokenValidationParameters.RoleClaimType = JwtClaimTypes.Role;
     });
 
 builder.Services.AddCascadingAuthenticationState();
@@ -110,13 +114,15 @@ app.UseAuthentication();
 
 // Add the BFF middleware which performs anti forgery protection
 app.UseBff();
+
+app.MapReverseProxy();
 app.UseAuthorization();
 
 
 app.UseAntiforgery();
 app.MapBffManagementEndpoints();
 
-app.MapReverseProxy();
+
 
 //app.UseCors("blazorfrontend");
 

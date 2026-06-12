@@ -1,6 +1,10 @@
-﻿using DemoProject.Shared.Entities;
+﻿using DemoProject.Shared.Auth;
+using DemoProject.Shared.Entities;
 using DemoProject.Shared.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Security.Claims;
+using System.Security.Principal;
 
 namespace DemoProject.Apis;
 
@@ -14,6 +18,7 @@ public static class PersonApi
             group.MapGet("/", GetAll);
             group.MapGet("/{id:int}", Get);
             group.MapPost("/", Post);
+            group.MapPut("/{id:int}", Put);
         }
     }
 
@@ -33,5 +38,22 @@ public static class PersonApi
     {
         var updatedPerson = await repo.AddAsync(newPerson);
         return TypedResults.Created("", updatedPerson);
+    }
+
+    public static async Task<Results<Ok<Person>, ForbidHttpResult>> Put(int id, ClaimsPrincipal principal,
+        IAuthorizationService authService, IPersonRepository repo, Person person)
+    {
+        var veelTeVeel = await repo.GetAllAsync();
+        var personEntity = veelTeVeel.SingleOrDefault(x => x.Id == id);
+
+        var result = await authService.AuthorizeAsync(principal, personEntity, "alleenbobmeth");
+        if (!result.Succeeded)
+        {
+            return TypedResults.Forbid();
+        }
+
+        // TODO: actually update db
+        return TypedResults.Ok(person);
+
     }
 }
